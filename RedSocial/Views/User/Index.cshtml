@@ -1,0 +1,72 @@
+﻿@model RedSocial.Core.Application.Viewmodel.AccounsViewModel.LoginViewModel;
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!--  
+<h1> Usuario</h1>
+
+<a asp-controller="User" asp-action="Registrar">Registrar</a>
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+@if (Model.HassError)
+{
+    <h1>@Model.Error</h1>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+}
+<form asp-controller="User" asp-action="Index" method="post">
+
+    <input asp-for="UserName" placeholder="Email del Usuario Usuario" />
+
+
+    <input asp-for="PassWord" placeholder="Contraseña" />
+
+    <button type="submit">Iniciar Sesion</button>
+
+    <a class="btn btn-warnig" asp-controller="User" asp-action="ForgotPassword">Olvide mi Contraseña</a>
+
+</form>-->
+<section>
+    <div class="container">
+        <div class="row">
+
+           
+           
+            <div class="col-6 mt-4">
+                <img class="logo__img"
+                     src="~/img/image_processing20191202-14263-ydyw15.png"
+                     alt="" />
+            </div>
+
+            <div class="col-6">
+                <h1 class="mt-5 p-2 titulo__login">Happening now</h1>
+                <h2 class="mt-5 subtitulo__login">Join Today.</h2>
+                @if (Model.HassError)
+                {
+                    <h1 class="text-secondary mt-3">@Model.Error</h1>
+                    <!--   <button type="button" class="btn-close text-white" data-bs-dismiss="alert" aria-label="Close"></button>-->
+                }
+                @Html.ValidationSummary(false, "", new { @class = "text-secondary" })
+                <a asp-controller="User" asp-action="Registrar" class="btn btn-primary mt-3 w-50 boton__Create">Create Account</a>
+
+                <form asp-controller="User" asp-action="Index" method="post" enctype="multipart/form-data">
+                    <input asp-for="UserName" class="mt-5 m-2 w-50 input__login--emailOrUserName text-white"
+                           type="text"
+                           placeholder="UserName or Email" />
+
+                    <input asp-for="PassWord" class="mt-2 m-2 w-50 input__login--emailOrUserName text-white"
+                           type="text"
+                           placeholder="Password" />
+                    <br />
+
+                    <button class="btn btn-secondary mt-4 m-2 w-50 enviar__login">
+                        Next
+                    </button>
+                    <br />
+
+                    <a  asp-controller="User" asp-action="ForgotPassword" class="m-2 mt-3 w-50 btn forgot__boton">Forgot Password?</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

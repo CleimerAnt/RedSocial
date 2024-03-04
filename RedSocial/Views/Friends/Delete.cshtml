@@ -1,0 +1,57 @@
+﻿@using Microsoft.AspNetCore.Http
+@using RedSocial.Core.Application.Dtos.Account
+@using RedSocial.Core.Application.Helpers;
+@model int;
+
+@inject IHttpContextAccessor httpContext;
+@{
+    Layout = null;
+    var user = httpContext.HttpContext.Session.get<AuthenticationResponse>
+         ("User");
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+    <style>
+        .action__delete:hover {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <a style="text-decoration:none ; color:red;  font-size: 20px;" type="button" class="action__delete" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" data-bs-whatever="mdo">Delete</a>
+    <div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title text-black" id="exampleModalDelete">Delete</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+                <div class="modal-body">
+                    <form asp-controller="Friends" asp-action="Delete" method="post" enctype="multipart/form-data">
+
+
+                        <h2 class="h2 text-black">Do you want to delete this friend?</h2>
+                        <div class="d-flex justify-content-end" style="gap: 20px;">
+                            <input type="hidden" name="Id" value="@Model" />
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </div>
+
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,280 @@
+﻿@using RedSocial.Core.Application.Dtos.Account
+@using RedSocial.Core.Application.Helpers;
+@model IEnumerable<RedSocial.Core.Application.Viewmodel.FriendsViewModel.FrinendsViewModel>;
+@inject IHttpContextAccessor httpContext;
+@{
+
+
+    var comment = ViewBag.Comments as IEnumerable
+            <RedSocial.Core.Application.Viewmodel.PublicationViewModel.PublicationViewModel>;
+
+    Layout = null;
+
+    var user = httpContext.HttpContext.Session.get<AuthenticationResponse>
+         ("User");
+
+
+    var alerta = @ViewBag.alerta;
+
+
+
+}
+
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous" />
+    <link rel="stylesheet" href="~/css/style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap"
+          rel="stylesheet" />
+</head>
+<body>
+    <section class="container">
+        <div class="row">
+            <div class="col-4">
+                <p class="img__home mt-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <!--!Font Awesome Free 6.5.1 by fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                        <path fill="#e2e5e9"
+                              d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
+                    </svg>
+                </p>
+
+
+                @if (user is not null)
+                {
+                    <a style="text-decoration: none; color: white;" class="CerrarSesion" asp-area="" asp-controller="User" asp-action="CerrarSesion">Sign Out(@user.UserName)</a>
+                }
+                <br />
+
+
+
+                <div id="miVistaParcial">
+                    @if (alerta is not null)
+                    {
+                        <div class="alert alert-primary mt-3" role="alert">
+                            You cannot leave the form empty
+                        </div>
+                    }
+                    <a class="btn btn-primary mt-3" asp-controller="Friends" asp-action="Create">Add Friend</a>
+                    @*  @await Html.PartialAsync("Create", new RedSocial.Core.Application.Viewmodel.FriendsViewModel.FrinedsPostViewModel())  *@
+                </div>
+
+             </div>
+
+                <div class="col-5">
+                    <div class="mt-4 text-white d-flex mb-5">
+                        <ul class="d-flex nav justify-content-center mt-2"
+                            style="margin-left:55px ">
+                        <li><a asp-controller="Publications" asp-action="Index" asp-route-userId="@user.Id">Para Ti</a></li>
+                        <li class="opcion__select"><a asp-controller="Friends" asp-route-userId="@user.Id asp-action="Index">Amigos</a></li>
+                        <li><a asp-controller="Profile" asp-action="Index" asp-route-userIde="@user.Id">Mi Perfil</a></li>
+                        </ul>
+                     </div>
+
+                            @foreach(var iten in Model)
+                            {
+                              @foreach(var publication in iten.PublicationList)
+                              {
+                                <div class="post mt-3" >
+                                    <p class="text-white mb-2 float-end">@publication.Date</p>
+                                    <div class="publicacion">
+
+                                        <img src="@publication.UserImg" alt="" />
+
+                                    
+                                        <h4 class="fw-bold">@publication.UserName</h4>
+                                    </div>
+
+                                    <p style="font-size: 18px;" class="text-white mt-3">
+                                        @publication.Text
+                                    </p>
+
+
+                                    <img src="@publication.MediaPublicationImg" style="width: 400px;" />
+
+                                    @if (@publication.MediaPublicationVideo is not null)
+                                    {
+                                        <div class="container d-flex justify-content-center mt-3 mb-5">
+                                            <iframe class="" width="500" style="margin-right: 50px;" height="450" src="@publication.MediaPublicationVideo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                        </div>
+                                    }
+
+                                </div>
+
+                                   <div class="d-flex justify-content-center mt-4 publicacion" style="gap: 100px">
+
+                            <p class="acciones comentar" style="width: 30px" >
+                                
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="comentar">
+                                        <!--!Font Awesome Free 6.5.1 by fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                        <path fill="#ebebeb"
+                                              d="M123.6 391.3c12.9-9.4 29.6-11.8 44.6-6.4c26.5 9.6 56.2 15.1 87.8 15.1c124.7 0 208-80.5 208-160s-83.3-160-208-160S48 160.5 48 240c0 32 12.4 62.8 35.7 89.2c8.6 9.7 12.8 22.5 11.8 35.5c-1.4 18.1-5.7 34.7-11.3 49.4c17-7.9 31.1-16.7 39.4-22.7zM21.2 431.9c1.8-2.7 3.5-5.4 5.1-8.1c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208s-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6c-15.1 6.6-32.3 12.6-50.1 16.1c-.8 .2-1.6 .3-2.4 .5c-4.4 .8-8.7 1.5-13.2 1.9c-.2 0-.5 .1-.7 .1c-5.1 .5-10.2 .8-15.3 .8c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4c4.1-4.2 7.8-8.7 11.3-13.5c1.7-2.3 3.3-4.6 4.8-6.9c.1-.2 .2-.3 .3-.5z" />
+                                    </svg>
+                             </p>
+                           
+                           
+                           
+                        </div>
+                
+
+                     @foreach(var i in publication.comments)
+                    {
+                        <div class="seccion_comments  " style="border-top:1px solid white ;">
+                            <div class="comments">
+                                <div class="publicacion">
+                                    <img src="@i.UserImg" alt="" />
+                                    <h4>@i.UserName</h4>
+                                </div>
+
+                                <p class="mt-1">
+                                    @i.Text
+                                </p>
+                                <div class="comentar">
+
+                                    <form asp-controller="Reply" asp-action="Create" method="post">
+                                        <input placeholder="Comentar"
+                                               type="text"
+                                               class="w-100 form-control bg-secondary"
+                                               name="Text"
+                                               id="" />
+
+
+                                        <input type="hidden" value="@i.Id" name="commentId" />
+                                            <input type="hidden" name="IsInFried" value="true" />
+                                        <input type="hidden" name="UserIdentity" value="@user.Id" />
+
+                                    </form>
+                                </div>
+
+                                @foreach (var y in @i.replyText)
+                                {
+
+                                    @if (@i.replyText is not null)
+                                    {
+                                        <div class="publicacion mt-3 ">
+                                            <img src="@y.UserImg" style="width: 35px;" alt="" />
+                                            <h4 style="font-size: 20px;">@y.UserName</h4>
+
+                                          
+                                        </div>
+                                        <p class="mt-1">
+
+                                            <p> @y.Text</p>
+                                             
+                                        </p>
+                                    }
+                                    <div class="comentar">
+
+                                        <form asp-controller="Reply" asp-action="Create" method="post">
+                                            <input placeholder="Comentar"
+                                                   type="text"
+                                                   class="w-100 form-control bg-secondary"
+                                                   name="Text"
+                                                   id="" />
+
+                                            <input type="hidden" name="parentId" value="@y.Id" />
+
+                                            <input type="hidden" value="@i.Id" name="commentId" />
+
+                                            <input type="hidden" name="UserIdentity" value="@user.Id" />
+
+                                                <input type="hidden" name="IsInFried" value="true" />
+
+                                        </form>
+                                        </div>
+                                }
+                            </div>
+                           
+                        </div>
+                    } 
+                    <div class="comentar">
+
+                        <form asp-controller="Comments" asp-action="Create" method="post">
+                            <input placeholder="Comentar"
+                                   type="text"
+                                   class="w-100 form-control bg-secondary"
+                                   name="Text"
+                                   id="" />
+
+                            <input type="hidden" name="identityId" value="@user.Id" />
+
+                            <input type="hidden" name="publicationId" value="@publication.Id" />
+
+                            <input type="hidden" name="IsInFried" value="true"/>
+
+                        </form>
+
+                    </div>
+                                   
+                             } 
+                        }
+
+                      
+                    </div>
+
+            <div class="col-3  text-white d-flex mt-3 flex-column align-items-end">
+                 <h4 class="fw-bold mt-3">Friends Added</h4>
+                @foreach(var friend in Model)
+                {
+                    <div class="publicacion mt-3">
+
+                        <img src="@friend.FriendImgUrl" alt="" />
+                        <p style="font-size: 20px;" class="fw-bold text-white">@friend.FriendFirstName</p>
+                    </div>
+
+                    <div class="mt-2" style="border-bottom: 1px solid white;">
+                        <p style="font-size: 15px;" class="text-white"><span class="fw-bold">User Name:</span> @friend.FriendUserName</p>
+                        <p style="font-size: 15px;" class=""><span class="fw-bold">Last Name:</span> @friend.FriendLastName</p>
+                        <div class="mt-1 mb-1 float-end">
+
+                        @await Html.PartialAsync("Delete", friend.Id)
+                        </div>
+                    </div>
+
+                } 
+            </div>
+
+
+            </div>
+
+         
+
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const seccionComments = document.querySelectorAll('.seccion_comments');
+        const botonesComentar = document.querySelectorAll('.acciones.comentar');
+
+        botonesComentar.forEach(botonComentar => {
+            botonComentar.addEventListener('click', () => {
+                seccionComments.forEach(seccion => {
+                    if (seccion.classList.contains('none')) {
+                        seccion.classList.remove('none');
+                        console.log('Comentarios mostrados');
+                    } else {
+                        seccion.classList.add('none');
+                        console.log('Comentarios ocultados');
+                    }
+                });
+            });
+        });
+    });
+</script>
+

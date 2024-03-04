@@ -1,0 +1,77 @@
+﻿@model RedSocial.Core.Application.Viewmodel.AccounsViewModel.UserPostViewModel;
+@{
+    ViewData["Title"] = "Registrar";
+}
+
+    <div class="container">
+        <div class="row">
+           
+            <div class="col-6 mt-4">
+                <img class="logo__img"
+                     src="~/img/image_processing20191202-14263-ydyw15.png"
+                     alt="" />
+            </div>
+
+            <div class="col-6">
+
+                
+                <h1 class="mt-5 mb-5 m-2 titulo__login">Create Account</h1>
+
+
+                @if (Model.HasError)
+                {
+                    <h1 class="text-secondary mt-3">@Model.Error</h1>
+                    <!--   <button type="button" class="btn-close text-white" data-bs-dismiss="alert" aria-label="Close"></button>-->
+                }
+                @Html.ValidationSummary(false, "", new { @class = "text-secondary" })
+
+                <form enctype="multipart/form-data" asp-controller="User" asp-action="Registrar" method="post">
+
+
+                    <div class="row">
+                    <div class="col-6">
+                        <input class="mt-4 m-2 input__login--emailOrUserName text-white"
+                               type="text"
+                               asp-for="FirstName" placeholder="First Name" />
+
+                            <input class="mt-4 m-2 input__login--emailOrUserName text-white"
+                               type="text"
+                               placeholder="Last Name" asp-for="LastName" />
+
+                            <input class="mt-4 m-2 input__login--emailOrUserName text-white"
+                               type="text"
+                               placeholder="User Name" asp-for="UserName"/>
+
+                            <input class="mt-4 m-2 input__login--emailOrUserName text-white"
+                               type="text"
+                               placeholder="Email" asp-for="Email"/>
+
+                            <input class="mt-4 m-2 input__login--emailOrUserName text-white"
+                               type="text"
+                               placeholder="Phone Number" asp-for="PhoneNumber" />
+                    </div>
+
+                    <div class="col-6">
+                            <input class="mt-4 m-2 input__login--emailOrUserName text-white"
+                               type="file"
+                               placeholder="Image" asp-for="file" />
+
+
+
+                            <input class="mt-4 m-2 input__login--emailOrUserName text-white"
+                               type="text"
+                               placeholder="Password" asp-for="PassWord" />
+
+                            <input class="mt-4 m-2 input__login--emailOrUserName text-white"
+                               type="text"
+                               placeholder="Confirn Password" asp-for="ConfirnPasword" />
+                    </div>
+                </div>
+                <button class="btn mt-5 w-25 float-end boton__Create boton__Registrar">
+                    Next
+                </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

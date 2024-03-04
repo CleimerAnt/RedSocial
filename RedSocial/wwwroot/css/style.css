@@ -1,0 +1,135 @@
+﻿body {
+    background-color: #0D0D0D;
+    font-family: "Roboto Slab", serif;
+}
+
+.logo__img {
+    width: 700px;
+    margin-top: 100px;
+}
+
+.titulo__login {
+    color: white;
+    font-size: 60px;
+    font-optical-sizing: auto;
+    font-weight: bold;
+}
+
+.subtitulo__login {
+    color: white;
+}
+
+.boton__Create {
+    padding: 8px;
+    border-radius: 20px;
+}
+
+.input__login--emailOrUserName {
+    padding: 13px;
+    border-radius: 5px;
+    background-color: #0D0D0D;
+    border: none;
+    border: 0.5px solid white;
+}
+
+.enviar__login {
+    padding: 8px;
+    border-radius: 20px;
+}
+
+.forgot__boton {
+    padding: 8px;
+    border-radius: 20px;
+    color: white;
+    border: 0.5px solid white;
+}
+
+.boton__Registrar {
+    border: 1px solid white;
+    margin-right: 65px;
+    color: white
+}
+
+.enviar__resetPassword{
+    padding:10px ;
+    border-radius:5px ;
+  
+}
+
+
+.img__home {
+    width: 80px;
+}
+
+.nav {
+    gap: 35px;
+}
+
+    .nav a {
+        list-style: none;
+        text-decoration: none;
+        color: white;
+    }
+
+.nav {
+    font-size: 20px;
+}
+
+.form__amigos {
+    background-color: #202327;
+    color: black;
+}
+
+.principal {
+}
+
+.publicacion img {
+    width: 60px;
+    border-radius: 100%;
+}
+
+.publicacion {
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.post {
+    padding: 10px 50px;
+    border-bottom: 1px solid white ;
+  
+}
+
+.acciones {
+    cursor: pointer;
+}
+
+.comments {
+   
+    color: white;
+    padding: 20px;
+    color: white;
+}
+
+    .comments h4 {
+        color: white;
+    }
+
+.none {
+    display: none;
+}
+
+.seccion_comments {
+    background-color: #202327;
+}
+
+.CerrarSesion{
+    list-style:none ;
+    text-decoration: none;
+    color:white ;
+}
+
+.opcion__select  {
+    border-bottom: #7532FA solid 5px ;
+}
