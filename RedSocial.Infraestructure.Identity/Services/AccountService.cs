@@ -222,7 +222,10 @@ namespace RedSocial.Infraestructure.Identity.Services
 
             return verificationUrL;
         }
+        public void probarImplementr()
+        {
 
+        }
         private async Task<string> SendVeForgotPassWord(ApplicationUser user, string origin)
         {
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
