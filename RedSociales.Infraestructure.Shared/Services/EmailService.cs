@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 using RedSocial.Core.Application.Interfaces.Email;
 
-namespace RedSociales.Infraestructure.Shared.Services
+namespace RedSocial.Infraestructure.Shared.Services
 {
     public class EmailService : IEmailService
     {

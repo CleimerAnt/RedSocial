@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using RedSocial.Core.Application.Interfaces.Email;
 using RedSocial.Core.Domain.Settings;
-using RedSociales.Infraestructure.Shared.Services;
+using RedSocial.Infraestructure.Shared.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
