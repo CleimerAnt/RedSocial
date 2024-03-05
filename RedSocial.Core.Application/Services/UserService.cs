@@ -43,7 +43,7 @@ namespace RedSocial.Core.Application.Services
             FrinedsPostViewModel friend = new();
             friend.FriendFirstName = vm.FirstName;  
             friend.FriendLastName = vm.LastName;
-            friend.FriendUserName = vm.UserName;
+            friend.FriendUserName = friends.FriendUserName;
             friend.FriendId = friends.FriendId;
             friend.FriendImgUrl = vm.ImgUrl;
             friend.UserId = friends.UserId;
@@ -54,12 +54,11 @@ namespace RedSocial.Core.Application.Services
 
             dbUserPostViewModel userPost = new();
             userPost.Id = userDb.Id;
-            userPost.UserName = vm.UserName;
+            userPost.UserName = userDb.UserName; 
             userPost.Email = vm.Email;
             userPost.LastName = vm.LastName;
             userPost.FirstName = vm.FirstName;
             userPost.PhoneNumber = vm.PhoneNumber;
-            userPost.UserName = vm.UserName;
             userPost.LastName = vm.LastName;
             userPost.PassWord = vm.PassWord;
             userPost.UserIdIndentity = vm.Id;

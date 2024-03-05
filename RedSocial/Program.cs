@@ -19,6 +19,7 @@ builder.Services.AddScoped<LoginAuthorize>();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSession();
+
 var app = builder.Build();
 
 await app.Services.AddIdentitySeedsInfraestrucuture();
@@ -37,6 +38,7 @@ app.UseSession();
 app.UseRouting();
 
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllerRoute(

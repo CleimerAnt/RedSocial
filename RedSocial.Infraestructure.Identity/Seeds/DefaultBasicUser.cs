@@ -47,3 +47,4 @@ namespace RedSocial.Infraestructure.Identity.Seeds
         }
     }
 }
+      

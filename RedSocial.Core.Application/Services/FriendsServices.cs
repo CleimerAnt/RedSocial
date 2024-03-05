@@ -38,7 +38,7 @@ namespace RedSocial.Core.Application.Services
             var users = await _userRepository.GetAllAsync();
             var publications = await _publicationsRepository.GetAllAsync(); 
 
-            var friends = from f in friendList
+            var friends = from f in friendList 
                           join u in users
                           on f.UserId equals u.Id
                           where u.Id == Id
@@ -50,18 +50,20 @@ namespace RedSocial.Core.Application.Services
                               FriendImgUrl = f.FriendImgUrl,
                               FriendUserName = f.FriendUserName,
                               FriendId = f.FriendId,
-                              PublicationList = (from p in publications
+                              PublicationList = (from p in publications 
                                                  join f2 in friendList on p.UserId equals f.FriendId
                                                  where f2.FriendId == f.FriendId
+                                                 orderby p.Id descending
                                                  select new PublicationViewModel
                                                  {
                                                      Text = p.Text,
                                                      MediaPublicationImg = p.MediaPublicationImg,
+                                                     MediaPublicationVideo = p.MediaPublicationVideo,
                                                      Date = p.Date,
                                                      UserImg = f.FriendImgUrl,
                                                      UserName = f.FriendUserName,
                                                      Id = p.Id
-                                                 }).Distinct().ToList()
+                                                 }).ToList()
                           };
 
 

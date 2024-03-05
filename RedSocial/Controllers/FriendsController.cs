@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RedSocial.Core.Application.Interfaces.Services;
 using RedSocial.Core.Application.Services;
 using RedSocial.Core.Application.Viewmodel.FriendsViewModel;
@@ -8,6 +9,7 @@ using RedSocial.Infraestructure.Persitence.Context;
 
 namespace RedSocial.Controllers
 {
+    [Authorize]
     public class FriendsController : Controller
     {
         private readonly IFriendsServices _friendsService;
@@ -20,6 +22,7 @@ namespace RedSocial.Controllers
             _commentServices = commentServices; 
           
         }
+        
         public async Task <IActionResult> Index(string userId)
         {
            var user = await _userServices.GetForIdentityId(userId); 
@@ -36,7 +39,7 @@ namespace RedSocial.Controllers
 
             return View(friends);
         }
-
+        
         public async Task<IActionResult> Create()
         {
 
@@ -94,12 +97,12 @@ namespace RedSocial.Controllers
             
             return RedirectToAction("Index", new {userId = userIde });  
         }
-
+        
         public async Task<IActionResult> Delete()
         {
             return View();  
         }
-
+       
         [HttpPost]
         public async Task<IActionResult> Delete(int Id, string userId)
         {

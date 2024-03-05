@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,14 +30,19 @@ namespace RedSocial.Infraestructure.Identity
             services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
 
+            
           
-
-          
-
-            #endregion
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/User";
+              
+                options.AccessDeniedPath = "/User/AccessDenied";
+            });
 
             services.AddAuthentication();
 
+            #endregion
+            
             #region "Services"
             services.AddTransient<IAccountServices, AccountService>();
             #endregion

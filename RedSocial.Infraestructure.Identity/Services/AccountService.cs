@@ -199,6 +199,11 @@ namespace RedSocial.Infraestructure.Identity.Services
 
             if (account == null)
             {
+                account = await _userManager.FindByNameAsync(request.Email);
+            }
+
+            if (account == null)
+            {
                 response.HasError = true;
                 response.Error = $"No Accounts registered with ${request.Email}";
                 return response;
@@ -289,8 +294,7 @@ namespace RedSocial.Infraestructure.Identity.Services
             vm.PassWord = await UpdatePassword(vm.Id, vm.PassWord);
 
             var user = await _userManager.FindByIdAsync(vm.Id);
-         
-            user.UserName = vm.UserName;
+            user.UserName = user.UserName;
             user.Email = vm.Email;
             user.PhoneNumber = vm.PhoneNumber;
             user.FirstName = vm.FirstName;

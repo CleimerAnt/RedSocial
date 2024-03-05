@@ -75,22 +75,22 @@
 
                             <input class="form-control w-100 mb-3 p-2" placeholder="Phone Number" asp-for="PhoneNumber">
 
-                            <input class="form-control w-100 mb-3 p-2" placeholder="User Name" asp-for="UserName">
+                        
 
                             <input class="form-control w-100 mb-3 p-2" placeholder="Email" asp-for="Email">
 
                             <input class="form-control w-100 mb-3 p-2"  type="file" placeholder="Foto de Perfil" asp-for="file">
                             
-                            <input class="form-control w-100 mb-3 p-2" placeholder="Password" asp-for="PassWord">
+                            <input class="form-control w-100 mb-3 p-2" placeholder="Password" type="password" asp-for="PassWord">
 
-                            <input class="form-control w-100 mb-3 p-2" placeholder="Confirn Password" asp-for="ConfirnPasword">
+                            <input class="form-control w-100 mb-3 p-2" placeholder="Confirn Password" type="password" asp-for="ConfirnPasword">
 
                             <input type="hidden" name="userIde" value="@user.Id" />
 
                             <input type="hidden" asp-for="Id" value="@user.Id"/>
 
                             <div class="d-flex  justify-content-end align-items-end" style="gap:10px;">
-                                <a asp-controller="Medico" asp-action="Index" class="btn btn-secondary text-white font-weight-bold ">Cancelar</a>
+                                <a asp-controller="Publications" asp-route-userId="@user.Id" asp-action="Index" class="btn btn-secondary text-white font-weight-bold ">Cancelar</a>
                                 <button type="submit" class="btn btn-primary  font-weight-bold">Agregar</button>
                             </div>
                         </form>

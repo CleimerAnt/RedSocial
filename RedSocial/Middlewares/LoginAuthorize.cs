@@ -16,7 +16,7 @@ namespace RedSocial.Middlewares
         {
             if (_userSession.HasUser())
             {
-                var controller = (PublicationsController)context.Controller;
+                var controller = (UserController)context.Controller;
 
                 context.Result = controller.RedirectToAction("Index", "Publications");
             }

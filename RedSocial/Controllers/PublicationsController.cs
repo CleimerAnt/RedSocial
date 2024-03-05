@@ -10,7 +10,7 @@ using RedSocial.Middlewares;
 
 namespace RedSocial.Controllers
 {
-   
+    [Authorize]
     public class PublicationsController : Controller
     {
     
@@ -23,7 +23,7 @@ namespace RedSocial.Controllers
             _userServices = userServices;
             _commentServices = commentServices;
         }
-    
+ 
         public async Task <IActionResult> Index(string userId)
         {
            var user = await  _userServices.GetForIdentityId(userId);
@@ -37,12 +37,12 @@ namespace RedSocial.Controllers
             }
             return View(publication);
         }
-        [ServiceFilter(typeof(LoginAuthorize))]
+    
         public async Task<IActionResult> Create()
         {
             return View(new PublicationViewModel() );
         }
-            
+    
         [HttpPost]
         public async Task<IActionResult> Create(PublicationPostViewModel publicVm)
         {
@@ -104,11 +104,13 @@ namespace RedSocial.Controllers
 
             return RedirectToAction("Index", new { userId = publicVm.IdenityUserId });
         }
+     
         public async Task<IActionResult> Edit(int Id)
         {
             var publication = await _publicationServices.GetById(Id);
             return View(publication);
         }
+      
         [HttpPost]
         public async Task<IActionResult> Edit(PublicationPostViewModel publicVm)
         {
@@ -124,13 +126,13 @@ namespace RedSocial.Controllers
         }
 
 
-        [ServiceFilter(typeof(LoginAuthorize))]
+
         public async Task<IActionResult> Delete()
         {
          
             return View();
         }
-        [HttpPost]
+     
         public async Task<IActionResult> Delete(int Id, string userId)
         {
 
@@ -159,71 +161,7 @@ namespace RedSocial.Controllers
             return RedirectToAction("Index", new { userId = userId });
         }
 
-        /* private string UploadFile(IFormFile file, int Id, bool isEditMode = false, string imageURL = "")
-         {
-             if (isEditMode && file == null && string.IsNullOrEmpty(imageURL))
-             {
-                 return string.Empty;
-             }
-
-             //Get Directory Path
-             string BasePath = $"/img/publication/{Id}";
-             string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot{BasePath}");
-
-             //Create Folder if no exits
-             if (!Directory.Exists(path))
-             {
-                 Directory.CreateDirectory(path);
-             }
-
-             string fileName;
-             if (isEditMode && file != null)
-             {
-                 //GetFilePath
-                 Guid guid = Guid.NewGuid();
-                 FileInfo fileInfo = new(file.FileName);
-                 fileName = guid + fileInfo.Extension;
-             }
-             else if (!isEditMode && file != null)
-             {
-                 //GetFilePath
-                 Guid guid = Guid.NewGuid();
-                 FileInfo fileInfo = new(file.FileName);
-                 fileName = guid + fileInfo.Extension;
-             }
-             else if (isEditMode && !string.IsNullOrEmpty(imageURL))
-             {
-                 string[] oldImage = imageURL.Split("/");
-                 string olImageName = oldImage[^1];
-                 fileName = olImageName;
-             }
-             else
-             {
-                 return string.Empty;
-             }
-
-             string fileNameWithPath = Path.Combine(path, fileName);
-
-             using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
-             {
-                 file.CopyTo(stream);
-             }
-
-             if (isEditMode && !string.IsNullOrEmpty(imageURL))
-             {
-                 string[] oldImage = imageURL.Split("/");
-                 string olImageName = oldImage[^1];
-                 string completeImageOldPath = Path.Combine(path, olImageName);
-
-                 if (System.IO.File.Exists(completeImageOldPath))
-                 {
-                     System.IO.File.Delete(completeImageOldPath);
-                 }
-             }
-
-             return $"{BasePath}/{fileName}";
-         }
-        */
+       
 
         private string UploadFile(IFormFile file, int Id, bool isEditMode = false, string imageURL = "")
         {

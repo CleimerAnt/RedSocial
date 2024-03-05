@@ -21,7 +21,7 @@
                 @if (Model.HasError)
                 {
                     <h1 class="text-secondary mt-3">@Model.Error</h1>
-                    <!--   <button type="button" class="btn-close text-white" data-bs-dismiss="alert" aria-label="Close"></button>-->
+                   
                 }
                 @Html.ValidationSummary(false, "", new { @class = "text-secondary" })
 
@@ -43,7 +43,7 @@
                                placeholder="User Name" asp-for="UserName"/>
 
                             <input class="mt-4 m-2 input__login--emailOrUserName text-white"
-                               type="text"
+                               type="email"
                                placeholder="Email" asp-for="Email"/>
 
                             <input class="mt-4 m-2 input__login--emailOrUserName text-white"
@@ -52,18 +52,18 @@
                     </div>
 
                     <div class="col-6">
-                            <input class="mt-4 m-2 input__login--emailOrUserName text-white"
+                            <input required class="mt-4 m-2 input__login--emailOrUserName text-white"
                                type="file"
                                placeholder="Image" asp-for="file" />
 
 
 
                             <input class="mt-4 m-2 input__login--emailOrUserName text-white"
-                               type="text"
-                               placeholder="Password" asp-for="PassWord" />
+                               type="password"
+                               placeholder="Password"  asp-for="PassWord" />
 
                             <input class="mt-4 m-2 input__login--emailOrUserName text-white"
-                               type="text"
+                               type="password"
                                placeholder="Confirn Password" asp-for="ConfirnPasword" />
                     </div>
                 </div>

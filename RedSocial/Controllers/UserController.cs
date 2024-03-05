@@ -20,12 +20,14 @@ namespace RedSocial.Controllers
           
 
         }
+        [ServiceFilter(typeof(LoginAuthorize))]
         public IActionResult Index()
         {
             return View(new LoginViewModel());
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(LoginAuthorize))]
         public async Task<IActionResult> Index(LoginViewModel LoginVm)
         {
             if (!ModelState.IsValid)
@@ -56,6 +58,7 @@ namespace RedSocial.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(LoginAuthorize))]
         public async Task<IActionResult> Registrar(UserPostViewModel User)
         {
             if (!ModelState.IsValid)
@@ -147,7 +150,7 @@ namespace RedSocial.Controllers
             return RedirectToAction("Index", "User");
 
         }
-
+      
         public async Task<IActionResult> AccessDenied()
         {
             return View();

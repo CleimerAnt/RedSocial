@@ -1,11 +1,13 @@
-﻿
+﻿@using RedSocial.Core.Application.Dtos.Account
+@using RedSocial.Core.Application.Helpers;
+@model RedSocial.Core.Application.Viewmodel.AccounsViewModel.UserPostViewModel;
+@inject IHttpContextAccessor httpContext;
 @{
-    ViewData["Title"] = "AccessDenied";
-}
-<!--  
-<h1>No tiene acceso para aceder a esta seccion </h1>
-<a asp-controller="Usuarios" asp-action="Index">Loguearme</a>-->
 
+    Layout = null;
+    var user = httpContext.HttpContext.Session.get<AuthenticationResponse>
+         ("User");
+}
 
 <section>
     <div class="container">
@@ -19,7 +21,7 @@
             <div class="col-6">
 
                 <h1 class="text-white mt-5">You do not have access to access this section </h1>
-                <a asp-controller="Usuarios" asp-action="Index" class="btn btn-primary float-end">
+                <a asp-controller="User" asp-action="Index" asp-route-userId="@user.Id" class="btn btn-primary float-end">
                     log in
                 </a>
             </div>

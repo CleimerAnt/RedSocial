@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CodeActions;
 using RedSocial.Core.Application.Interfaces.Services;
@@ -21,6 +22,7 @@ namespace RedSocial.Controllers
             _friendsServices = friendsServices;
 
         }
+        [Authorize]
         public async Task  <IActionResult> Index(string userIde)
         {
             var userDb = await _DbouserServices.GetForIdentityId(userIde);
@@ -36,19 +38,16 @@ namespace RedSocial.Controllers
          
              return View(user);
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Update(UserPostViewModel userVm)
         {
             if (userVm != null)
             {
-
-
                 await _userService.UpdateUserIdentity(userVm);
-              
             }
 
-            return View("Index");
+            return RedirectToAction("Index", "Publications" ,new { userId = userVm.Id });
         }
     }
 }
