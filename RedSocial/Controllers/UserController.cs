@@ -65,14 +65,9 @@ namespace RedSocial.Controllers
 
             var origin = Request.Headers["origin"];
 
+
+
             RegistrerResponse response = await _userService.RegisterAsync(User, origin);
-
-            /*  if (User != null )
-              {
-                    User.ImgUrl = UploadFile(User.file, User.Id);
-
-                    await _serviceUser.Editar(User, User.Id);
-              }*/
 
 
             if (response.HasError)

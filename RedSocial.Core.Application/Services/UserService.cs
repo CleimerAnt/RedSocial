@@ -29,7 +29,7 @@ namespace RedSocial.Core.Application.Services
         }
 
         
-        public async Task UpdateUserIdentity(UserPostViewModel vm)
+       /* public async Task UpdateUserIdentity(UserPostViewModel vm)
         {
             vm.ImgUrl =  await _accountServices.EditImg(vm.Id,vm.file );
 
@@ -53,14 +53,16 @@ namespace RedSocial.Core.Application.Services
 
             await _accountServices.UpdateUsr(vm);
 
-        }
+        }*/
         public async Task<RegistrerResponse> RegisterAsync(UserPostViewModel vm, string origin)
         {
-            vm.ImgUrl = await _accountServices.InsertImg(vm.Id, vm.file);
+            
 
             RegistrerRequest registerRequest = _mapper.Map<RegistrerRequest>(vm);
 
+
             return await _accountServices.RegistrerBasicUserAsync(registerRequest, origin);
+
   
         }
 
@@ -100,6 +102,9 @@ namespace RedSocial.Core.Application.Services
             return userResponse;
         }
 
-       
+        public Task UpdateUserIdentity(UserPostViewModel vm)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,9 +1,16 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using RedSocial.Core.Application.Dtos.Account;
 using RedSocial.Core.Application.Dtos.Email.Account;
 using RedSocial.Core.Application.Enums;
+using RedSocial.Core.Application.Interfaces.Account;
 using RedSocial.Core.Application.Interfaces.Email;
+using RedSocial.Core.Application.Interfaces.Services;
+using RedSocial.Core.Application.Viewmodel;
+using RedSocial.Core.Application.Viewmodel.AccounsViewModel;
+using RedSocial.Core.Domain.Entities;
 using RedSocial.Infraestructure.Identity.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,24 +20,32 @@ using System.Threading.Tasks;
 
 namespace RedSocial.Infraestructure.Identity.Services
 {
-    public class AccountService
+    public class AccountService : IAccountServices
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailService _emailService;
+        private readonly IDboUserServices dboUserServices;
+    
 
-        public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailService emailService)
+        public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailService emailService, IDboUserServices userServices)
         {
             _emailService = emailService;
             _userManager = userManager;
             _signInManager = signInManager;
+            dboUserServices = userServices;
+
         }
 
         public async Task<AuthenticationResponse> AuthenticateASYNC(AuthenticationRequest requuest)
         {
             AuthenticationResponse response = new();
 
-            var user = await _userManager.FindByEmailAsync(requuest.Email);
+            var user = await _userManager.FindByNameAsync(requuest.UserName);
+            if(user == null)
+            {
+                user = await _userManager.FindByEmailAsync(requuest.UserName);
+            }
 
             if (user == null)
             {
@@ -103,10 +118,31 @@ namespace RedSocial.Infraestructure.Identity.Services
                 LastName = request.LastName,
                 Email = request.Email,
                 UserName = request.UserName,
+                PhoneNumber = request.PhoneNumber,
 
             };
 
             var result = await _userManager.CreateAsync(user, request.PassWord);
+
+            if(user != null && user.Id != null )
+            {
+                user.ImgUrl = UploadFile(request.file, user.Id);
+                await _userManager.UpdateAsync(user);
+            }
+
+            dbUserPostViewModel userVm = new();
+            userVm.ImgUrl = user.ImgUrl;
+            userVm.UserName = user.UserName;    
+            userVm.Email = user.Email;
+            userVm.UserIdIndentity = user.Id;
+            userVm.PhoneNumber = user.PhoneNumber;
+            userVm.FirstName = user.FirstName;
+            userVm.LastName = user.LastName;
+            userVm.PassWord = user.PasswordHash;  
+
+
+            await dboUserServices.AddAsync(userVm);
+
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, Roles.Basic.ToString());
@@ -196,6 +232,13 @@ namespace RedSocial.Infraestructure.Identity.Services
             request.Token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(request.Token));
             var result = await _userManager.ResetPasswordAsync(account, request.Token, request.Password);
 
+            await _emailService.SendAsync(new EmailRequest()
+            {
+                To = account.Email,
+                Body = $"Your New Password is {request.Password}",
+                Subject = "New Password"
+            });
+
             if (!result.Succeeded)
             {
                 response.HasError = true;
@@ -213,7 +256,7 @@ namespace RedSocial.Infraestructure.Identity.Services
 
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-            var route = "Usuarios/ConfirmEmail";
+            var route = "User/ConfirmEmail";
 
             var Uri = new Uri(string.Concat($"{origin}/", route));
 
@@ -222,17 +265,14 @@ namespace RedSocial.Infraestructure.Identity.Services
 
             return verificationUrL;
         }
-        public void probarImplementr()
-        {
-
-        }
+        
         private async Task<string> SendVeForgotPassWord(ApplicationUser user, string origin)
         {
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
 
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-            var route = "Usuarios/ResetPassword";
+            var route = "User/ResetPassword";
 
             var Uri = new Uri(string.Concat($"{origin}/", route));
 
@@ -241,5 +281,50 @@ namespace RedSocial.Infraestructure.Identity.Services
 
             return verificationUrL;
         }
+        private string UploadFile(IFormFile file, string Id, bool isEditMode = false, string imageURL = "")
+        {
+            if (isEditMode && file == null)
+            {
+                return imageURL;
+            }
+
+            //Get Directory Path
+            string BasePath = $"/img/user/{Id}";
+            string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot{BasePath}");
+
+            //Create Folder if no exits
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+
+            //GetFilePath
+            Guid guid = Guid.NewGuid();
+            FileInfo fileInfo = new(file.FileName);
+            string fileName = guid + fileInfo.Extension;
+
+            string fileNameWithPath = Path.Combine(path, fileName);
+
+            using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+            {
+                file.CopyTo(stream);
+            }
+
+            if (isEditMode)
+            {
+                string[] oldImage = imageURL.Split("/");
+                string olImageName = oldImage[^1];
+                string completeImageOldPath = Path.Combine(path, olImageName);
+
+                if (System.IO.File.Exists(completeImageOldPath))
+                {
+                    System.IO.File.Delete(completeImageOldPath);
+                }
+
+            };
+            return $"{BasePath}/{fileName}";
+        }
+
     }
 }
