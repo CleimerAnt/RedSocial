@@ -14,10 +14,13 @@ namespace RedSocial.Core.Application.Viewmodel.FriendsViewModel
         [Required (ErrorMessage = "Debe seleccionar un Usuario")]
         public int FriendId { get; set; }
         public int? UserId { get; set; }
-
+        [DataType (DataType.Text)]
         public string? FriendFirstName { get; set; }
+        [DataType(DataType.Text)]
         public string? FriendLastName { get; set; }
+        [DataType(DataType.Text)]
         public string? FriendImgUrl { get; set; }
+        [DataType(DataType.Text)]
         public string? FriendUserName { get; set; }
 
 

@@ -14,8 +14,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSharedInfraestrucutre(builder.Configuration);
 builder.Services.AddPersistenceInfrastructure(builder.Configuration);
 builder.Services.AddApplucationLayer(builder.Configuration);
-builder.Services.AddTransient<ValidateUserSession, ValidateUserSession>();
 builder.Services.AddScoped<LoginAuthorize>();
+builder.Services.AddTransient<ValidateUserSession, ValidateUserSession>();
+
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSession();
