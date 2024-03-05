@@ -1,15 +1,19 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RedSocial.Core.Application.Interfaces.Services;
 using RedSocial.Core.Application.Viewmodel.CommentsViewModel;
 using RedSocial.Core.Application.Viewmodel.PublicationViewModel;
 using RedSocial.Core.Domain.Entities;
+using RedSocial.Middlewares;
 
 namespace RedSocial.Controllers
 {
+   
     public class PublicationsController : Controller
     {
+    
         private readonly IPublicationServices _publicationServices;
         private readonly IDboUserServices _userServices;
         private readonly ICommentServices _commentServices;
@@ -19,6 +23,7 @@ namespace RedSocial.Controllers
             _userServices = userServices;
             _commentServices = commentServices;
         }
+    
         public async Task <IActionResult> Index(string userId)
         {
            var user = await  _userServices.GetForIdentityId(userId);
@@ -32,7 +37,7 @@ namespace RedSocial.Controllers
             }
             return View(publication);
         }
-
+        [ServiceFilter(typeof(LoginAuthorize))]
         public async Task<IActionResult> Create()
         {
             return View(new PublicationViewModel() );
@@ -118,8 +123,8 @@ namespace RedSocial.Controllers
             return RedirectToAction("Index", new { userId = publicVm.IdenityUserId });
         }
 
-       
 
+        [ServiceFilter(typeof(LoginAuthorize))]
         public async Task<IActionResult> Delete()
         {
          

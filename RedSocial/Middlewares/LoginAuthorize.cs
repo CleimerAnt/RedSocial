@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using RedSocial.Controllers;
 
 namespace RedSocial.Middlewares
@@ -15,8 +16,9 @@ namespace RedSocial.Middlewares
         {
             if (_userSession.HasUser())
             {
-                var controller = (UserController)context.Controller;
-                context.Result = controller.RedirectToAction("Index", "User");
+                var controller = (PublicationsController)context.Controller;
+
+                context.Result = controller.RedirectToAction("Index", "Publications");
             }
             else
             {

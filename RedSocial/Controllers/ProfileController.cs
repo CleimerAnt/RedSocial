@@ -11,12 +11,15 @@ namespace RedSocial.Controllers
     {
         private readonly IUserService _userService;
         private readonly  IDboUserServices _DbouserServices;
+        private readonly IFriendsServices _friendsServices;
         private readonly IMapper _mapper;
-        public ProfileController(IUserService userService, IDboUserServices dboUserServices, IMapper mapper)
+        public ProfileController(IUserService userService, IDboUserServices dboUserServices, IMapper mapper, IFriendsServices friendsServices)
         {
             _userService = userService;
             _DbouserServices = dboUserServices;
             _mapper = mapper;
+            _friendsServices = friendsServices;
+
         }
         public async Task  <IActionResult> Index(string userIde)
         {
@@ -39,7 +42,7 @@ namespace RedSocial.Controllers
         {
             if (userVm != null)
             {
-              
+
 
                 await _userService.UpdateUserIdentity(userVm);
               

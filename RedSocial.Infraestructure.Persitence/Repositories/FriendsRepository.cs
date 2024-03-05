@@ -1,4 +1,5 @@
-﻿using RedSocial.Core.Application.Interfaces.Repository;
+﻿using Microsoft.EntityFrameworkCore;
+using RedSocial.Core.Application.Interfaces.Repository;
 using RedSocial.Core.Application.Viewmodel.FriendsViewModel;
 using RedSocial.Core.Application.Viewmodel.PublicationViewModel;
 using RedSocial.Core.Domain.Entities;
@@ -14,5 +15,12 @@ namespace RedSocial.Infraestructure.Persitence.Repositories
             _Context = context;
         }
 
+        public async Task<Friends> GetBYFriendId(int Id)
+        {
+            var friend = await _Context.Set<Friends>().FirstOrDefaultAsync(f => f.FriendId == Id);
+
+            return friend;
+
+        }
     }
 }

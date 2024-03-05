@@ -12,6 +12,9 @@ namespace RedSocial.Core.Application.Interfaces.Account
         Task<RegistrerResponse> RegistrerBasicUserAsync(RegistrerRequest request, string origin);
         Task<ResetPasswordResponse> ResetPasswordAsync(ResetPasswordRequest request);
         Task SingOutAsync();
-      
+
+        Task UpdateUser(UserPostViewModel vm);
+
+        Task<string> EditarImg(IFormFile file, string Id, string ImgUrl);
     }
 }

@@ -9,7 +9,7 @@ namespace RedSocial.Core.Application.Viewmodel.FriendsViewModel
 {
     public class FrinedsPostViewModel
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [Required (ErrorMessage = "Debe seleccionar un Usuario")]
         public int FriendId { get; set; }

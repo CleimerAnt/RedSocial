@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using RedSocial.Core.Application.Dtos.Account;
 using RedSocial.Core.Application.Dtos.Email.Account;
 using RedSocial.Core.Application.Enums;
@@ -14,6 +15,7 @@ using RedSocial.Core.Domain.Entities;
 using RedSocial.Infraestructure.Identity.Entities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.SymbolStore;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -265,6 +267,7 @@ namespace RedSocial.Infraestructure.Identity.Services
 
             return verificationUrL;
         }
+
         
         private async Task<string> SendVeForgotPassWord(ApplicationUser user, string origin)
         {
@@ -281,6 +284,42 @@ namespace RedSocial.Infraestructure.Identity.Services
 
             return verificationUrL;
         }
+        public async Task UpdateUser(UserPostViewModel vm)
+        {
+            vm.PassWord = await UpdatePassword(vm.Id, vm.PassWord);
+
+            var user = await _userManager.FindByIdAsync(vm.Id);
+         
+            user.UserName = vm.UserName;
+            user.Email = vm.Email;
+            user.PhoneNumber = vm.PhoneNumber;
+            user.FirstName = vm.FirstName;
+            user.LastName = vm.LastName;
+            user.ImgUrl = vm.ImgUrl;
+            user.PasswordHash = vm.PassWord;
+
+            
+             var resultado =   await _userManager.UpdateAsync(user);
+           
+            if (resultado.Succeeded) { }
+        }
+
+        public  async Task<string> EditarImg(IFormFile file, string Id, string  ImgUrl)
+        {
+            var img = "";
+            img =  UploadFile(file, Id, true, ImgUrl);
+            return img;
+        }
+        public async Task<string> UpdatePassword(string userId, string newPassword)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            
+            var newPasswordHash = _userManager.PasswordHasher.HashPassword(user, newPassword);
+
+            return newPasswordHash;
+        }
+
+
         private string UploadFile(IFormFile file, string Id, bool isEditMode = false, string imageURL = "")
         {
             if (isEditMode && file == null)

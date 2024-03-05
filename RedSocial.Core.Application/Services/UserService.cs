@@ -4,6 +4,7 @@ using RedSocial.Core.Application.Interfaces.Account;
 using RedSocial.Core.Application.Interfaces.Services;
 using RedSocial.Core.Application.Viewmodel;
 using RedSocial.Core.Application.Viewmodel.AccounsViewModel;
+using RedSocial.Core.Application.Viewmodel.FriendsViewModel;
 using RedSocial.Core.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -19,22 +20,37 @@ namespace RedSocial.Core.Application.Services
         private readonly IAccountServices _accountServices;
         private readonly IMapper _mapper;
         private readonly IDboUserServices _DbouserServices;
+        private readonly IFriendsServices _friendsServices;
         
-        
-        public UserService(IAccountServices accountServices, IMapper mapper, IDboUserServices dboUserServices)
+        public UserService(IAccountServices accountServices, IMapper mapper, IDboUserServices dboUserServices, IFriendsServices friendsServices)
         {
             _accountServices = accountServices;
             _mapper = mapper;
            _DbouserServices = dboUserServices;  
+           _friendsServices = friendsServices;
         }
 
         
-       /* public async Task UpdateUserIdentity(UserPostViewModel vm)
+        public async Task UpdateUserIdentity(UserPostViewModel vm)
         {
-            vm.ImgUrl =  await _accountServices.EditImg(vm.Id,vm.file );
-
 
             var userDb = await _DbouserServices.GetForIdentityId(vm.Id);
+
+            var friends = await _friendsServices.GetFriendByFriendId(userDb.Id);
+
+            vm.ImgUrl =  await _accountServices.EditarImg(vm.file, vm.Id, userDb.ImgUrl);
+
+            FrinedsPostViewModel friend = new();
+            friend.FriendFirstName = vm.FirstName;  
+            friend.FriendLastName = vm.LastName;
+            friend.FriendUserName = vm.UserName;
+            friend.FriendId = friends.FriendId;
+            friend.FriendImgUrl = vm.ImgUrl;
+            friend.UserId = friends.UserId;
+            friend.Id  = friends.Id;
+
+          await  _friendsServices.Editar(friend, friend.Id);
+
 
             dbUserPostViewModel userPost = new();
             userPost.Id = userDb.Id;
@@ -49,11 +65,10 @@ namespace RedSocial.Core.Application.Services
             userPost.UserIdIndentity = vm.Id;
             userPost.ImgUrl = vm.ImgUrl;
             await _DbouserServices.Editar(userPost, userPost.Id);
-       
 
-            await _accountServices.UpdateUsr(vm);
+            await _accountServices.UpdateUser(vm);
 
-        }*/
+        }
         public async Task<RegistrerResponse> RegisterAsync(UserPostViewModel vm, string origin)
         {
             
@@ -102,9 +117,6 @@ namespace RedSocial.Core.Application.Services
             return userResponse;
         }
 
-        public Task UpdateUserIdentity(UserPostViewModel vm)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

@@ -26,7 +26,12 @@ namespace RedSocial.Core.Application.Services
             _publicationsRepository = publicationsRepository;
         }
 
-        
+        public async Task<Friends>  GetFriendByFriendId(int Id)
+        {
+            var friend = await _repository.GetBYFriendId(Id);
+
+            return friend;
+        }
         public async Task<List<FrinendsViewModel>> GetFriends(int Id)
         {
             var friendList = await _repository.GetAllAsync();
