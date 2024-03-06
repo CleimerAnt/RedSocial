@@ -12,8 +12,8 @@ using RedSocial.Infraestructure.Identity.Context;
 namespace RedSocial.Infraestructure.Identity.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20240226213455_IdenitityInit")]
-    partial class IdenitityInit
+    [Migration("20240306135948_IdentityInit")]
+    partial class IdentityInit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -183,7 +183,6 @@ namespace RedSocial.Infraestructure.Identity.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImgUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")

@@ -34,9 +34,9 @@ namespace RedSocial.Infraestructure.Identity
           
             services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = "/User";
+                options.LoginPath = "/User/AccessDenied";
               
-                options.AccessDeniedPath = "/User/AccessDenied";
+               
             });
 
             services.AddAuthentication();

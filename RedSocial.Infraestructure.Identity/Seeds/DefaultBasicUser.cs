@@ -22,13 +22,13 @@ namespace RedSocial.Infraestructure.Identity.Seeds
             defaultUser.Email = "basicUser@gmail.com";
 
             defaultUser.FirstName = "Clei";
-         
+
 
             defaultUser.LastName = "Lorenzo";
 
             defaultUser.PhoneNumber = "809-000-0000";
 
-            defaultUser.ImgUrl = string.Empty;  
+            defaultUser.ImgUrl = string.Empty;
 
             defaultUser.EmailConfirmed = true;
 
@@ -47,4 +47,3 @@ namespace RedSocial.Infraestructure.Identity.Seeds
         }
     }
 }
-      

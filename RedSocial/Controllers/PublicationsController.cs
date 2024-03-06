@@ -26,6 +26,7 @@ namespace RedSocial.Controllers
  
         public async Task <IActionResult> Index(string userId)
         {
+
            var user = await  _userServices.GetForIdentityId(userId);
 
             var publication = await _publicationServices.GetAllDesc(user.Id);

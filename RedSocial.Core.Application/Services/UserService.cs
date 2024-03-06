@@ -40,16 +40,20 @@ namespace RedSocial.Core.Application.Services
 
             vm.ImgUrl =  await _accountServices.EditarImg(vm.file, vm.Id, userDb.ImgUrl);
 
-            FrinedsPostViewModel friend = new();
-            friend.FriendFirstName = vm.FirstName;  
-            friend.FriendLastName = vm.LastName;
-            friend.FriendUserName = friends.FriendUserName;
-            friend.FriendId = friends.FriendId;
-            friend.FriendImgUrl = vm.ImgUrl;
-            friend.UserId = friends.UserId;
-            friend.Id  = friends.Id;
+            if (friends is not null)
+            {
 
-          await  _friendsServices.Editar(friend, friend.Id);
+                FrinedsPostViewModel friend = new();
+                friend.FriendFirstName = vm.FirstName;
+                friend.FriendLastName = vm.LastName;
+                friend.FriendUserName = friends.FriendUserName;
+                friend.FriendId = friends.FriendId;
+                friend.FriendImgUrl = vm.ImgUrl;
+                friend.UserId = friends.UserId;
+                friend.Id = friends.Id;
+
+                await _friendsServices.Editar(friend, friend.Id);
+            }
 
 
             dbUserPostViewModel userPost = new();

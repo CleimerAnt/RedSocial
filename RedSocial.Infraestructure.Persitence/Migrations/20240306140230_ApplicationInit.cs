@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RedSocial.Infraestructure.Persitence.Migrations
 {
     /// <inheritdoc />
-    public partial class CambiarId : Migration
+    public partial class ApplicationInit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,6 +18,11 @@ namespace RedSocial.Infraestructure.Persitence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FriendId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    FriendFirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FriendLastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FriendImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FriendUserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -34,6 +39,7 @@ namespace RedSocial.Infraestructure.Persitence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    UserIdIndentity = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -109,9 +115,10 @@ namespace RedSocial.Infraestructure.Persitence.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false),
                     MediaPublicationImg = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MediaPublicationVideo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PostShared = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CommentsId = table.Column<int>(type: "int", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -136,7 +143,6 @@ namespace RedSocial.Infraestructure.Persitence.Migrations
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     comentId = table.Column<int>(type: "int", nullable: false),
-                    ParentreplyId = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -146,14 +152,9 @@ namespace RedSocial.Infraestructure.Persitence.Migrations
                 {
                     table.PrimaryKey("PK_Replies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Replies_Comments_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Replies_Comments_comentId",
+                        column: x => x.comentId,
                         principalTable: "Comments",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Replies_Replies_ParentreplyId",
-                        column: x => x.ParentreplyId,
-                        principalTable: "Replies",
                         principalColumn: "Id");
                 });
 
@@ -202,14 +203,9 @@ namespace RedSocial.Infraestructure.Persitence.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Replies_ParentreplyId",
+                name: "IX_Replies_comentId",
                 table: "Replies",
-                column: "ParentreplyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Replies_UserId",
-                table: "Replies",
-                column: "UserId");
+                column: "comentId");
         }
 
         /// <inheritdoc />

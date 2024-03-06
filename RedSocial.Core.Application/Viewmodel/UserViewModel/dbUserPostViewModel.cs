@@ -14,6 +14,7 @@ public class dbUserPostViewModel
     public string UserIdIndentity { get; set; }
     public  int Id { get; set; }
     [DataType(DataType.Text)]
+    
     public string FirstName { get; set; }
     [DataType(DataType.Text)]
     public string LastName { get; set; }
@@ -26,6 +27,7 @@ public class dbUserPostViewModel
     [DataType(DataType.Text)]
     public string? ImgUrl { get; set; }
     [DataType(DataType.Text)]
+    [RegularExpression(@"^(809|829|849)-\d{3}-\d{4}$", ErrorMessage = "The phone number must be in Dominican Republic format.")]
     public string PhoneNumber { get; set; }
 
     //Navegation Properties

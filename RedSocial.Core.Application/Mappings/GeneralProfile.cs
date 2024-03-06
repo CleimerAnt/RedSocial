@@ -149,6 +149,8 @@ namespace RedSocial.Core.Application.Mappings
               .ForMember(dest => dest.Error, opt => opt.Ignore())
               .ForMember(dest => dest.file, opt => opt.Ignore())
               .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+            CreateMap<UserPostViewModel, EditUserViewModel>().ReverseMap();
               
             #endregion;
 

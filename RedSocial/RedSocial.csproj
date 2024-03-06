@@ -21,4 +21,9 @@
     <ProjectReference Include="..\RedSociales.Infraestructure.Shared\RedSocial.Infraestructure.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\img\publication\" />
+    <Folder Include="wwwroot\img\User\" />
+  </ItemGroup>
+
 </Project>

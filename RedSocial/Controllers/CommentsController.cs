@@ -5,6 +5,7 @@ using RedSocial.Core.Application.Viewmodel.CommentsViewModel;
 
 namespace RedSocial.Controllers
 {
+    
     public class CommentsController : Controller
     {
         private readonly ICommentServices _commentsServices;
@@ -22,15 +23,7 @@ namespace RedSocial.Controllers
 
             return View();
         }
-       /* [HttpPost]
-        public async Task<IActionResult> IndexComment(int Id)
-        {
-            var comments = await _commentsServices.GetCommentByPublication(Id);
-
-            return View(comments);
-        }*/
-        
-
+      
         public async Task<IActionResult> Create()
         {
             return View();

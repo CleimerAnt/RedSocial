@@ -98,7 +98,7 @@ namespace RedSocial.Controllers
 
             return View("ConfirmEmail", response);
         }
-        [ServiceFilter(typeof(LoginAuthorize))]
+       
         public IActionResult ForgotPassword()
         {
             return View(new ForgotPasswordViewModel());
@@ -153,6 +153,7 @@ namespace RedSocial.Controllers
       
         public async Task<IActionResult> AccessDenied()
         {
+      
             return View();
         }
 

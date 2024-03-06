@@ -33,15 +33,23 @@ namespace RedSocial.Controllers
             user.UserName = userDb.UserName;    
             user.Email = userDb.Email;
             user.LastName = userDb.LastName;
-            user.FirstName = userDb.FirstName;  
-           
+            user.FirstName = userDb.FirstName;
+
+            EditUserViewModel userModel = _mapper.Map<EditUserViewModel>(user);
          
-             return View(user);
+             return View(userModel);
         }
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Update(UserPostViewModel userVm)
+        public async Task<IActionResult> Update(EditUserViewModel user)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Index",user);    
+            }
+
+            UserPostViewModel userVm = _mapper.Map<UserPostViewModel>(user);
+
             if (userVm != null)
             {
                 await _userService.UpdateUserIdentity(userVm);

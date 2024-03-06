@@ -12,8 +12,8 @@ using RedSocial.Infraestructure.Persitence.Context;
 namespace RedSocial.Infraestructure.Persitence.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240229162750_agregarDate")]
-    partial class agregarDate
+    [Migration("20240306140230_ApplicationInit")]
+    partial class ApplicationInit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,14 +109,33 @@ namespace RedSocial.Infraestructure.Persitence.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FriendFirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("FriendId")
                         .HasColumnType("int");
+
+                    b.Property<string>("FriendImgUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FriendLastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FriendUserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("LasModified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -159,7 +178,6 @@ namespace RedSocial.Infraestructure.Persitence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Text")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
