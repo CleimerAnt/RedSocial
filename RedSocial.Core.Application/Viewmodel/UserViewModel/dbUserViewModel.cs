@@ -14,13 +14,12 @@ namespace RedSocial.Core.Application.Viewmodel.UserViewModel
         public string LastName { get; set; }
         public string Email { get; set; }
         public string UserName { get; set; }
-        public string PassWord { get; set; }
         public string? ImgUrl { get; set; }
         public string PhoneNumber { get; set; }
 
         //Navegation Properties
         public ICollection<PublicationViewModel.PublicationViewModel> publications { get; set; }
-        public ICollection<Friends> friends { get; set; }
+        public ICollection<FriendsViewModel.FrinendsViewModel> friends { get; set; }
         public ICollection<CommentsViewModel.CommentsViewModel> comment { get; set; }
     }
 }

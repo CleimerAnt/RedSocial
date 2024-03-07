@@ -39,14 +39,15 @@
             </div>
            
 
-            <select asp-for="FriendId" class="form-control">
+          <!--   <select asp-for="FriendId" class="form-control">
                 <option disabled>--Add Friend--</option>
 
                 @foreach (var item in users)
                 {
                     <option value="@item.Id">@item.UserName</option>
                 }
-            </select>
+              </select>-->
+              <input type="text" placeholder="User Name Friend" class="form-control" asp-for="FriendUserName"/>
 
             <input type="hidden" name="userIde" value="@user.Id"/>
 

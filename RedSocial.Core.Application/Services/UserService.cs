@@ -64,7 +64,6 @@ namespace RedSocial.Core.Application.Services
             userPost.FirstName = vm.FirstName;
             userPost.PhoneNumber = vm.PhoneNumber;
             userPost.LastName = vm.LastName;
-            userPost.PassWord = vm.PassWord;
             userPost.UserIdIndentity = vm.Id;
             userPost.ImgUrl = vm.ImgUrl;
             await _DbouserServices.Editar(userPost, userPost.Id);

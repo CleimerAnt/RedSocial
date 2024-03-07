@@ -4,6 +4,7 @@ using RedSocial.Core.Domain.Entities;
 using RedSocial.Infraestructure.Persitence.Context;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,13 @@ namespace RedSocial.Infraestructure.Persitence.Repositories
 
             return User;
 
+        }
+         
+        public async Task<User> GetByName(string name)
+        {
+            var user = await _context.Set<User>().FirstOrDefaultAsync(u => u.UserName == name);
+
+            return user;
         }
     }
 }

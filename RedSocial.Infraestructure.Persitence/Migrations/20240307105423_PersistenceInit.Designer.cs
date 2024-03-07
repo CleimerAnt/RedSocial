@@ -12,8 +12,8 @@ using RedSocial.Infraestructure.Persitence.Context;
 namespace RedSocial.Infraestructure.Persitence.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240306140230_ApplicationInit")]
-    partial class ApplicationInit
+    [Migration("20240307105423_PersistenceInit")]
+    partial class PersistenceInit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -259,10 +259,6 @@ namespace RedSocial.Infraestructure.Persitence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PassWord")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

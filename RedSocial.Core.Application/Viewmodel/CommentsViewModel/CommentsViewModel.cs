@@ -21,6 +21,6 @@ namespace RedSocial.Core.Application.Viewmodel.CommentsViewModel
         //Navegation Properties
         public ICollection<PublicationViewModel.PublicationViewModel> Publications { get; set; }
         public UserViewModel.dbUserViewModel User { get; set; }
-        public ICollection<Reply> Replys { get; set; }
+        public ICollection<ReplyViewModel.ReplyViewModel> Replys { get; set; }
     }
 }

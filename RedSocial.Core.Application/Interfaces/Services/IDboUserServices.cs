@@ -12,5 +12,6 @@ namespace RedSocial.Core.Application.Interfaces.Services
     public interface IDboUserServices : IGenericService<dbUserViewModel, dbUserPostViewModel, User>
     {
         Task<dbUserViewModel> GetForIdentityId(string Id);
+        Task<dbUserViewModel> GetByName(string name);
     }
 }

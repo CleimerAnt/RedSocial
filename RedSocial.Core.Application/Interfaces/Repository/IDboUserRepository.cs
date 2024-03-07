@@ -11,5 +11,6 @@ namespace RedSocial.Core.Application.Interfaces.Repository
     public interface IDboUserRepository : IGenericRepository<User>
     {
         Task<User> GetByIdentityId(string Id);
+        Task<User> GetByName(string name);
     }
 }

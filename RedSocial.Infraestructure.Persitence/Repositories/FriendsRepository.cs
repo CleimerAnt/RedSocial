@@ -22,5 +22,15 @@ namespace RedSocial.Infraestructure.Persitence.Repositories
             return friend;
 
         }
+
+        public async Task<Friends> GetByName(string name)
+        {
+            var friend = await _Context.Set<Friends>().FirstOrDefaultAsync(f => f.FriendUserName == name);
+
+            return friend;
+
+        }
+
+       
     }
 }

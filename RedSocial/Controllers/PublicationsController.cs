@@ -133,6 +133,7 @@ namespace RedSocial.Controllers
          
             return View();
         }
+        [HttpPost]
      
         public async Task<IActionResult> Delete(int Id, string userId)
         {

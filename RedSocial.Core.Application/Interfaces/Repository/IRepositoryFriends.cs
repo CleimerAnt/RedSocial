@@ -12,5 +12,7 @@ namespace RedSocial.Core.Application.Interfaces.Repository
     public interface IRepositoryFriends : IGenericRepository<Friends>
     {
         Task<Friends> GetBYFriendId(int Id);
+
+        Task<Friends> GetByName(string name);
     }
 }

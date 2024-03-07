@@ -10,7 +10,6 @@ namespace RedSocial.Core.Domain.Entities
         public string LastName { get; set; }
         public string Email { get; set; }
         public string UserName { get; set; }
-        public string PassWord { get; set; }
         public string? ImgUrl { get; set; }
         public string PhoneNumber { get; set; }
 

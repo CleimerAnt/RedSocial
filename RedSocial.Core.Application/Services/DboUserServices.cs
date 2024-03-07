@@ -30,5 +30,14 @@ namespace RedSocial.Core.Application.Services
 
             return userVm;
         }
+
+        public async Task<dbUserViewModel> GetByName(string name)
+        {
+            var user = await _services.GetByName(name);
+
+            dbUserViewModel userViewModel = _mapper.Map<dbUserViewModel>(user);
+
+            return userViewModel;
+        }
     }
 }

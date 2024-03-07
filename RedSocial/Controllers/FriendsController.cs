@@ -55,8 +55,9 @@ namespace RedSocial.Controllers
         {
             var user = await _userServices.GetForIdentityId(userIde);
             var modelo = await _friendsService.GetFriends(user.Id);
-            var modelFriend = await _userServices.GetById(friendsVm.FriendId);
-            
+            var modelFriend = await _userServices.GetByName(friendsVm.FriendUserName);
+
+           
 
             if (!ModelState.IsValid)
             {
@@ -65,11 +66,21 @@ namespace RedSocial.Controllers
                 return View();  
             }
 
+            if (modelFriend == null)
+            {
+                ModelState.AddModelError("Add Friend verification", "That user does not exist");
+                var friend = await _userServices.GetAllAsync();
+                ViewBag.friend = friend;
+                return View();
+
+            }
+
             friendsVm.UserId = user.Id;
             friendsVm.FriendFirstName = modelFriend.FirstName;  
             friendsVm.FriendUserName = modelFriend.UserName;
             friendsVm.FriendImgUrl = modelFriend.ImgUrl;
             friendsVm.FriendLastName = modelFriend.LastName;
+            friendsVm.FriendId = modelFriend.Id;
 
             if(friendsVm.FriendUserName == user.UserName)
             {

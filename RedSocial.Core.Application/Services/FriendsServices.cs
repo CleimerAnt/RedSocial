@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Newtonsoft.Json;
 using RedSocial.Core.Application.Interfaces.Repository;
 using RedSocial.Core.Application.Interfaces.Services;
 using RedSocial.Core.Application.Viewmodel.FriendsViewModel;
@@ -7,6 +8,7 @@ using RedSocial.Core.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,12 +27,21 @@ namespace RedSocial.Core.Application.Services
             _mapper = mapper;   
             _publicationsRepository = publicationsRepository;
         }
+        public async Task<FrinendsViewModel>GetFriendByName(string name)
+        {
+            var friend = await _repository.GetByName(name);
 
-        public async Task<Friends>  GetFriendByFriendId(int Id)
+            FrinendsViewModel frinendsViewModel = _mapper.Map<FrinendsViewModel>(friend);
+
+            return frinendsViewModel;
+
+        }
+         public async Task<FrinendsViewModel>  GetFriendByFriendId(int Id)
         {
             var friend = await _repository.GetBYFriendId(Id);
+            FrinendsViewModel frinendsViewModel = _mapper.Map<FrinendsViewModel>(friend);
 
-            return friend;
+            return frinendsViewModel;
         }
         public async Task<List<FrinendsViewModel>> GetFriends(int Id)
         {
@@ -69,5 +80,7 @@ namespace RedSocial.Core.Application.Services
 
             return friends.ToList();
         }
+
+       
     }
 }

@@ -22,8 +22,7 @@ public class dbUserPostViewModel
     public string Email { get; set; }
     [DataType(DataType.Text)]
     public string UserName { get; set; }
-    [DataType(DataType.Text)]
-    public string PassWord { get; set; }
+   
     [DataType(DataType.Text)]
     public string? ImgUrl { get; set; }
     [DataType(DataType.Text)]

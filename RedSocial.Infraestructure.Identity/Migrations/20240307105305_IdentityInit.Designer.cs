@@ -12,7 +12,7 @@ using RedSocial.Infraestructure.Identity.Context;
 namespace RedSocial.Infraestructure.Identity.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20240306135948_IdentityInit")]
+    [Migration("20240307105305_IdentityInit")]
     partial class IdentityInit
     {
         /// <inheritdoc />

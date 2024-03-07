@@ -12,7 +12,7 @@ namespace RedSocial.Core.Application.Interfaces.Services
     public interface IFriendsServices : IGenericService<FrinendsViewModel, FrinedsPostViewModel, Friends>
     {
         Task<List<FrinendsViewModel>> GetFriends(int Id);
-
-        Task<Friends> GetFriendByFriendId(int Id);
+        Task<FrinendsViewModel> GetFriendByName(string name);
+        Task<FrinendsViewModel> GetFriendByFriendId(int Id);
     }
 }

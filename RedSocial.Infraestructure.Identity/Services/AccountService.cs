@@ -140,7 +140,7 @@ namespace RedSocial.Infraestructure.Identity.Services
             userVm.PhoneNumber = user.PhoneNumber;
             userVm.FirstName = user.FirstName;
             userVm.LastName = user.LastName;
-            userVm.PassWord = user.PasswordHash;  
+          
 
 
             await dboUserServices.AddAsync(userVm);
